@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07131d" />
+    <title>Connect ESP32 to Wi-Fi</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Arial, sans-serif;
+        background: #07131d;
+        color: #ecfeff;
+      }
+
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 24px 16px; }
+      main { max-width: 520px; margin: 24px auto; }
+      .card { padding: 24px; border: 1px solid #29404e; border-radius: 20px; background: #10232f; }
+      .eyebrow { color: #38d3b0; text-transform: uppercase; letter-spacing: .12em; font-size: 12px; }
+      h1 { margin: 8px 0; }
+      p { color: #afc0ca; line-height: 1.5; }
+      label { display: block; margin: 18px 0 7px; color: #dce8ed; }
+      input { width: 100%; padding: 13px; border: 1px solid #496170; border-radius: 10px; background: #07131d; color: white; font-size: 16px; }
+      button { width: 100%; margin-top: 20px; padding: 14px; border: 0; border-radius: 10px; background: #38d3b0; color: #06251c; font-size: 16px; font-weight: bold; cursor: pointer; }
+      button:disabled { opacity: .6; cursor: wait; }
+      .status { margin-top: 16px; padding: 12px; border-radius: 10px; background: #07131d; color: #b4c5d0; overflow-wrap: anywhere; }
+      .error { color: #fecdd6; }
+      .qr-card { display: flex; align-items: center; gap: 18px; margin-top: 16px; }
+      .qr-card img { width: 104px; height: 104px; background: white; border-radius: 8px; }
+      a { color: #72e9c8; }
+      .help { margin-top: 20px; font-size: 14px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="card">
+        <p class="eyebrow">ESP32 irrigation setup</p>
+        <h1>Connect to your hotspot</h1>
+        <p>Enter the mobile hotspot name and password. Keep the hotspot enabled. Your phone stays on mobile data while it sends the credentials to the ESP32 over Bluetooth.</p>
+
+        <form id="wifiForm">
+          <label for="ssid">Hotspot name (SSID)</label>
+          <input id="ssid" name="ssid" maxlength="32" autocomplete="off" required />
+          <label for="password">Hotspot password</label>
+          <input id="password" name="password" type="password" maxlength="63" autocomplete="new-password" />
+          <button id="submitButton" type="submit">Connect ESP32 and continue</button>
+        </form>
+
+        <div id="status" class="status" role="status" aria-live="polite">Ready to configure. Bluetooth is required.</div>
+        <p class="help">Use Android Chrome or another browser supporting Web Bluetooth. Keep this page open while the ESP32 connects. After setup, it will open the dashboard. The current firmware does not enable BLE pairing encryption, so configure the device only in a trusted place.</p>
+        <p class="help"><a href="/">Go to the irrigation dashboard</a></p>
+      </section>
+
+      <section class="card qr-card">
+        <img src="/api/setup-qr" alt="QR code for this ESP32 Wi-Fi setup page" />
+        <p>Scan this QR code from another screen or print it to open this setup page quickly.</p>
+      </section>
+    </main>
+    <script src="/setup.js"></script>
+  </body>
+</html>

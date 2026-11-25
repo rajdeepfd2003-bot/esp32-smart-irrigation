@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Irrigation Control</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">ESP32 • GPIO 34 / 26</p>
+          <h1>Smart Irrigation</h1>
+        </div>
+        <div class="status-pill" id="connectionStatus"><span class="status-dot"></span>Connecting…</div>
+      </header>
+
+      <main class="dashboard">
+        <section class="moisture-card card">
+          <div class="card-heading">
+            <div>
+              <p class="label">Soil moisture</p>
+              <h2>Current reading</h2>
+            </div>
+            <span class="sensor-pill" id="sensorStatus">Sensor offline</span>
+          </div>
+
+          <div class="moisture-content">
+            <div class="moisture-ring" id="moistureRing">
+              <div>
+                <strong id="moistureValue">--</strong><span>%</span>
+                <small id="moistureLabel">Waiting</small>
+              </div>
+            </div>
+
+            <div class="sensor-details">
+              <div class="metric-row"><span>Raw ADC value</span><strong id="rawValue">--</strong></div>
+              <div class="metric-row"><span>Last sensor update</span><strong id="lastSensorTime">Waiting…</strong></div>
+              <div class="metric-row"><span>Pump relay</span><strong id="pumpStatus" class="pump-off">OFF</strong></div>
+              <div class="metric-row"><span>Control mode</span><strong id="modeStatus">Manual</strong></div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="controls-card card">
+          <div class="card-heading">
+            <div>
+              <p class="label">Pump control</p>
+              <h2>Water relay</h2>
+            </div>
+          </div>
+
+          <button id="pumpToggle" class="pump-button off"><span id="pumpButtonIcon">●</span><span id="pumpButtonText">Start pump</span></button>
+
+          <div class="control-divider"></div>
+
+          <div class="mode-header">
+            <div>
+              <p class="label">Automatic mode</p>
+              <small>Control pump from soil moisture</small>
+            </div>
+            <label class="switch">
+              <input id="autoMode" type="checkbox" />
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="thresholds">
+            <label for="dryThreshold">Start watering below <strong id="dryValue">40%</strong></label>
+            <input id="dryThreshold" type="range" min="0" max="99" value="40" />
+
+            <label for="wetThreshold">Stop watering above <strong id="wetValue">65%</strong></label>
+            <input id="wetThreshold" type="range" min="1" max="100" value="65" />
+          </div>
+
+          <button id="saveSettings" class="secondary-btn wide">Save thresholds</button>
+        </aside>
+      </main>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "esp32-smart-irrigation",
+  "version": "1.0.0",
+  "description": "ESP32 soil moisture monitoring and pump control dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

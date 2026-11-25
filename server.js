@@ -1,5 +1,8 @@
 const express = require('express');
 const path = require('path');
+const QRCode = require('qrcode');
+
+const PUBLIC_URL = process.env.PUBLIC_URL || 'https://esp32-smart-irrigation.onrender.com';
 
 const DEFAULT_CONFIG = {
   autoMode: false,
@@ -28,6 +31,24 @@ function createApp() {
 
   app.use(express.json());
   app.use(express.static(path.join(__dirname, 'public')));
+
+  app.get('/setup', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'setup.html'));
+  });
+
+  app.get('/api/setup-qr', async (req, res) => {
+    try {
+      const svg = await QRCode.toString(`${PUBLIC_URL}/setup`, {
+        type: 'svg',
+        errorCorrectionLevel: 'M',
+        margin: 2,
+      });
+      res.type('image/svg+xml').send(svg);
+    } catch (error) {
+      console.error('Could not generate Wi-Fi setup QR code:', error);
+      res.status(500).json({ success: false, error: 'Could not generate setup QR code' });
+    }
+  });
 
   app.get('/api/status', (req, res) => {
     const sensorOnline = appState.lastSensorAt
